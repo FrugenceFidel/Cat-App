@@ -1,0 +1,13 @@
+<% include partials/header %>
+
+<h2><%= cat.name%></h2>
+<img src="<%= cat.image %>">
+<p><%= cat.decription %></p>
+<span><%= cat.createdAt %></span>
+<p><a href="/cats/<%= cat._id %>/edit">Edit</a></p>
+
+<form action="/cats/<%= cat._id %>?_method=DELETE" method="POST">
+	<button>Delete</button>
+</form>
+
+<% include partials/footer %>
