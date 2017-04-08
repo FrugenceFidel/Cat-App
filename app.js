@@ -8,7 +8,8 @@ var port = process.env.PORT || 3000;
 
 // Mongoose Config
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/cat');
+var url = process.env.DATABASEURL || 'mongodb://localhost/cat';
+mongoose.connect(url);
 
 // Mongoose Schema
 var Schema = mongoose.Schema;
