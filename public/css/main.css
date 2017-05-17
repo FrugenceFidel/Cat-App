@@ -1,0 +1,41 @@
+body {
+	background: #FFFFFF;
+	padding-top: 50px;
+	font-family: 'PT Sans', sans-serif;
+}
+
+h1 {
+	font-weight: 700;
+}
+
+.navbar-default {
+	border-bottom: none;
+	background: #2C3E50;
+}
+
+.navbar-brand img {
+	height: 40px;
+	display: inline;
+}
+
+.navbar-brand span {
+	position: relative;
+	top: -6px;
+	color: #FFF;
+}
+
+.navbar-default .navbar-nav > li > a,
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:visited {
+	color: #FFF;
+}
+
+.jumbotron {
+	background: #18bc9c;
+	color: #FFF;
+}
+
+#img-jumbotron {
+	border: 1px solid black;
+	padding: 2px;
+}

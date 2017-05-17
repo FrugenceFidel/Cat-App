@@ -1,10 +1,9 @@
-const express                    = require('express'),
-			mongoose                   = require('mongoose'),
-			methodOverride						 = require('method-override'),
-			bodyParser                 = require('body-parser');
-
-var app = express();
-var port = process.env.PORT || 3000;
+var express                    = require('express'),
+		mongoose                   = require('mongoose'),
+		methodOverride						 = require('method-override'),
+		bodyParser                 = require('body-parser'),
+		app                        = express(),
+		port                       = process.env.PORT || 3000;
 
 // Mongoose Config
 mongoose.Promise = global.Promise;
@@ -43,80 +42,87 @@ var Cat = mongoose.model('Cat', catSchema);
 
 // APP CONFIG
 app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 
 // Route
 // root - route
-app.get('/', (req, res) => {
+app.get('/', function (req, res) {
 	res.redirect('/cats');
 });
 
 // index - route
-app.get('/cats', (req, res) => {
-	Cat.find({}).sort({createdAt: -1}).then((cats) => {
-		res.render('cats', {cats});
-	}, e => {
-		console.log(e);
-	});
+app.get('/cats', function (req, res) {
+	Cat.find({}, function (err, cats) {
+		if (err) {
+			console.log(err);
+		} else {
+			res.render('index', {cats: cats});
+		}
+	}).sort({createdAt: -1});
 });
 
 // new - route
-app.get('/cats/new', (req, res) => {
+app.get('/cats/new', function (req, res) {
 	res.render('new');
 });
 
 // create route
-app.post('/cats', (req, res) => {
-	var data = req.body.cat;
-	Cat.create(data).then(cat => {
-		res.redirect('/cats');
-	}, e => {
-		console.log(e);
-	})
+app.post('/cats', function (req, res) {
+	Cat.create(req.body.cat, function (err, cat) {
+		if (err) {
+			console.log(err);
+		} else {
+			res.redirect('/cats');
+		}
+	});
 });
 
 // show - route
-app.get('/cats/:id', (req, res) => {
-	var id = req.params.id;
-	Cat.findById(id).then(cat => {
-		res.render('show', {cat});
-	}, e => {
-		console.log(e);
+app.get('/cats/:id', function (req, res) {
+	Cat.findById(req.params.id, function (err, cat) {
+		if (err) {
+			console.log(err);
+		} else {
+			res.render('show', {cat});
+		}
 	});
 });
 
 // edit - route
-app.get('/cats/:id/edit', (req, res) => {
-	var id= req.params.id;
-	Cat.findById(id).then(cat => {
-		res.render('edit', {cat});
-	}, e => {
-		console.log(e);
+app.get('/cats/:id/edit', function (req, res) {
+	Cat.findById(req.params.id, function (err, cat) {
+		if (err) {
+			console.log(err);
+		} else {
+			res.render('edit', {cat});
+		}
 	});
 });
 
 // update - route
-app.put('/cats/:id', (req, res) => {
-	var id= req.params.id;
-	var data = req.body.cat;
-	Cat.findByIdAndUpdate(id, data).then(cat => {
-		res.redirect('/cats/' + id);
-	}, e => {
-		console.log(e);
+app.put('/cats/:id', function (req, res) {
+	Cat.findByIdAndUpdate(req.params.id, req.body.cat, function (err, cat) {
+		if (err) {
+			console.log(err);
+		} else {
+			res.redirect('/cats/' + req.params.id);
+		}
 	});
 });
 
 // destroy route
-app.delete('/cats/:id', (req, res) => {
-	var id= req.params.id;
-	Cat.findByIdAndRemove(id).then((cat) => {
-		res.redirect('/cats');
-	}, e => {
-		console.log(e);
+app.delete('/cats/:id', function (req, res) {
+	Cat.findByIdAndRemove(req.params.id, function (err) {
+		if (err) {
+			console.log(err);
+		} else {
+			res.redirect('/cats');
+		}
 	});
 });
 
-app.listen(port, () => {
-	console.log(`App started at port ${port}`);
+app.listen(port, function () {
+	console.log('App started at port' + port);
 });

@@ -1,19 +1,26 @@
 {
-  "name": "blog",
+  "name": "cat",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FrugenceFidel/Cat-App.git"
   },
   "author": "Frugence Fidel",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FrugenceFidel/Cat-App/issues"
+  },
+  "homepage": "https://github.com/FrugenceFidel/Cat-App#readme",
   "dependencies": {
     "body-parser": "^1.17.1",
     "ejs": "^2.5.6",
     "express": "^4.15.2",
     "method-override": "^2.3.8",
-    "mongoose": "^4.9.3"
+    "mongoose": "^4.9.9"
   }
 }
