@@ -3,30 +3,33 @@
 <header class="jumbotron">
   <div class="container">
     <div class="row">
-    	<div class="col-lg-8">
+    	<div class="col-sm-8">
     		<h1>Welcome to the Cat App</h1>
     		<p>Share your beutiful cat to the world</p>
-    		<p><a href="/cats/new" class="btn btn-default btn-lg">Add Our Cat</a></p>
+    		<p><a href="/cats/new" class="btn btn-default btn-lg">Share Your Cat</a></p>
     	</div>
-    	<div class="col-lg-4">
+    	<div class="col-sm-4">
     		<img id="img-jumbotron" src="https://s-media-cache-ak0.pinimg.com/736x/9f/6e/37/9f6e373dbdb01a6f3e11aa71ade75dd7.jpg" class="img-responsive img-rounded">
     	</div>
     </div>
   </div>
 </header>
 
-<div class="container">
-	<% cats.forEach(function (cat) { %>
-		<div>
-			<h2><%= cat.name%></h2>
-			<img src="<%= cat.image %>">
-			<p>
-				<%= cat.decription.substring(0, 100) %>...
-				<a href="/cats/<%= cat._id %>">read more</a>
-			</p>
-			<span><%= cat.createdAt %></span>
-		</div>
-	<% }); %>
+<div class="container" id="main-container">
+    <div class="row">
+        <% cats.forEach(function (cat) { %>
+            <div class="col-sm-4 col-md-3">
+                <div class="thumbnail">
+                    <img src="<%= cat.image %>">
+                    <div class="caption">
+                        <h2><%= cat.name%></h2>
+                        <p><%= cat.decription.substring(0, 70) %>...</p>
+                        <a href="/cats/<%= cat._id %>" class="btn btn-default">read more</a>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
 </div>
 
 <% include ./partials/footer %>
