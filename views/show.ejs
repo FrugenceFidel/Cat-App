@@ -1,15 +1,22 @@
 <% include ./partials/header %>
 
-<div class="container">
-	<h2><%= cat.name%></h2>
-	<img src="<%= cat.image %>">
-	<p><%= cat.decription %></p>
-	<span><%= cat.createdAt.toDateString() %></span>
-	<p><a class="btn btn-default" role="button" href="/cats/<%= cat._id %>/edit">Edit</a></p>
-
-	<form action="/cats/<%= cat._id %>?_method=DELETE" method="POST">
-		<button class="btn btn-default">Delete</button>
-	</form>
+<div id="show" class="container">
+	<div class="row">
+		<div class="col-sm-8 col-sm-offset-2">
+			<h2><%= cat.name%></h2>
+			<div class="thumbnail">
+				<img src="<%= cat.image %>">
+				<div class="caption">
+					<span>Posted: <%= cat.createdAt.toDateString() %></span>
+					<p><%= cat.decription %></p>
+					<a class="btn btn-default" role="button" href="/cats/<%= cat._id %>/edit">Edit</a>
+					<form action="/cats/<%= cat._id %>?_method=DELETE" method="POST">
+						<button class="btn btn-default">Delete</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <% include ./partials/footer %>

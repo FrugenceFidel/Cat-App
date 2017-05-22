@@ -44,3 +44,15 @@ h1 {
 	display: flex;
 	flex-wrap: wrap;
 }
+
+#show .thumbnail {
+	padding: 0;
+}
+
+#show img {
+	width: 100%;
+}
+
+#show form {
+	display: inline;
+}
