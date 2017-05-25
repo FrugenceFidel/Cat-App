@@ -1,4 +1,4 @@
-<% include ./partials/header %>
+<% include ../partials/header %>
 
 <header class="jumbotron">
   <div class="container">
@@ -23,7 +23,7 @@
                     <img src="<%= cat.image %>">
                     <div class="caption">
                         <h2><%= cat.name%></h2>
-                        <p><%= cat.decription.substring(0, 70) %>...</p>
+                        <p><%= cat.description.substring(0, 70) %>...</p>
                         <a href="/cats/<%= cat._id %>" class="btn btn-default">read more</a>
                     </div>
                 </div>
@@ -32,4 +32,4 @@
     </div>
 </div>
 
-<% include ./partials/footer %>
+<% include ../partials/footer %>

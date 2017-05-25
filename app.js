@@ -5,6 +5,8 @@ var express                    = require('express'),
 
 var app                        = express(),
 		catRouter                  = require('./routes/cats'),
+		commentRouter              = require('./routes/comments'),
+		seedDB                     = require('./seedDB'),
 		port                       = process.env.PORT || 3000;
 
 // Mongoose Config
@@ -18,6 +20,9 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 app.use(catRouter);
+app.use(commentRouter);
+
+seedDB();
 
 // Route
 // root - route

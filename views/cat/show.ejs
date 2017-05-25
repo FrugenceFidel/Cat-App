@@ -1,0 +1,32 @@
+<% include ../partials/header %>
+
+<div id="show" class="container">
+	<div class="row">
+		<div class="col-sm-8 col-sm-offset-2">
+			<h2><%= cat.name%></h2>
+			<div class="thumbnail">
+				<img src="<%= cat.image %>">
+				<div class="caption">
+					<span>Posted: <%= cat.createdAt.toDateString() %></span>
+					<p><%= cat.description %></p>
+					<a class="btn btn-default" role="button" href="/cats/<%= cat._id %>/edit">Edit</a>
+					<form action="/cats/<%= cat._id %>?_method=DELETE" method="POST">
+						<button class="btn btn-default">Delete</button>
+					</form>
+					<div>
+						<a href="/cats/<%= cat._id %>/comments/new" class="btn btn-default">Add comment</a>
+						<% cat.comments.forEach(function (comment) { %>
+							<p><%= comment.author %> - <%= comment.content %></p>
+							<a href="/cats/<%= cat._id %>/comments/<%= comment._id %>/edit" class="btn btn-default">Edit</a>
+							<form action="/cats/<%= cat._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+								<button class="btn btn-default">Delete</button>
+							</form>
+						<%	}); %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<% include ../partials/footer %>

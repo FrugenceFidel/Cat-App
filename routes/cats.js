@@ -8,14 +8,14 @@ router.get('/cats', function (req, res) {
 		if (err) {
 			console.log(err);
 		} else {
-			res.render('index', {cats: cats});
+			res.render('cat/index', {cats: cats});
 		}
 	}).sort({createdAt: -1});
 });
 
 // new - route
 router.get('/cats/new', function (req, res) {
-	res.render('new');
+	res.render('cat/new');
 });
 
 // create route
@@ -31,11 +31,11 @@ router.post('/cats', function (req, res) {
 
 // show - route
 router.get('/cats/:id', function (req, res) {
-	Cat.findById(req.params.id, function (err, cat) {
+	Cat.findById(req.params.id).populate('comments').exec(function (err, cat) {
 		if (err) {
 			console.log(err);
 		} else {
-			res.render('show', {cat: cat});
+			res.render('cat/show', {cat: cat});
 		}
 	});
 });
@@ -46,7 +46,7 @@ router.get('/cats/:id/edit', function (req, res) {
 		if (err) {
 			console.log(err);
 		} else {
-			res.render('edit', {cat: cat});
+			res.render('cat/edit', {cat: cat});
 		}
 	});
 });

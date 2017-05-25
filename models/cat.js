@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+		Comment  = require('./comment');
 
 var Schema = mongoose.Schema;
 var catSchema = new Schema ({
@@ -14,16 +15,20 @@ var catSchema = new Schema ({
 		minlength: 1,
 		trim: true
 	},
-	decription: {
+	description: {
 		type: String,
-		required: [true, 'Decription is required'],
+		required: [true, 'Description is required'],
 		minlength: 1,
 		trim: true
 	},
 	createdAt: {
 		type: Date,
 		default: Date.now
-	}
+	},
+	comments: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Comment'
+	}]
 });
 
 // Mongoose Model
