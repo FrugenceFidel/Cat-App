@@ -22,7 +22,7 @@ app.use(methodOverride('_method'));
 app.use(catRouter);
 app.use(commentRouter);
 
-seedDB();
+// seedDB();
 
 // Route
 // root - route
