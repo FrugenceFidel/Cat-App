@@ -1,5 +1,4 @@
-var mongoose = require('mongoose'),
-		Comment  = require('./comment');
+var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 var catSchema = new Schema ({
@@ -24,6 +23,13 @@ var catSchema = new Schema ({
 	createdAt: {
 		type: Date,
 		default: Date.now
+	},
+	author: {
+		id: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User'
+		},
+		username: String
 	},
 	comments: [{
 		type: mongoose.Schema.Types.ObjectId,

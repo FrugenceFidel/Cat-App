@@ -1,17 +1,18 @@
-var express = require('express'),
-		router  = express.Router(),
-		Comment     = require('../models/comment'),
-		Cat     = require('../models/cat');
+var express    = require('express'),
+		router     = express.Router({mergeParams: true}),
+		middleware = require('../middleware'),
+		Comment    = require('../models/comment'),
+		Cat        = require('../models/cat');
 
 // New route
 router.get('/cats/:id/comments/new', function (req, res) {
-	Cat.findById(req.params.id, function (err, cat) {
+	Cat.findById(req.params.id, middleware.is, function (err, cat) {
 		res.render('comment/new', {cat: cat});
 	});
 });
 
 // create route
-router.post('/cats/:id/comments', function (req, res) {
+router.post('/cats/:id/comments', middleware.isLoggedIn, function (req, res) {
 	Cat.findById(req.params.id, function (err, cat) {
 		if (err) {
 			console.log(err);
@@ -33,7 +34,7 @@ router.post('/cats/:id/comments', function (req, res) {
 });
 
 // Edit route
-router.get('/cats/:id/comments/:comment_id/edit', function (req, res) {
+router.get('/cats/:id/comments/:comment_id/edit', middleware.commentOwner, function (req, res) {
 	Cat.findById(req.params.id, function (err, cat) {
 		if (err) {
 			console.log(err);
@@ -50,7 +51,7 @@ router.get('/cats/:id/comments/:comment_id/edit', function (req, res) {
 });
 
 // update route
-router.put('/cats/:id/comments/:comment_id', function (req, res) {
+router.put('/cats/:id/comments/:comment_id', middleware.commentOwner, function (req, res) {
 	Cat.findById(req.params.id, function (err, cat) {
 		if (err) {
 			console.log(err);
@@ -67,7 +68,7 @@ router.put('/cats/:id/comments/:comment_id', function (req, res) {
 });
 
 // Delete route
-router.delete('/cats/:id/comments/:comment_id', function (req, res) {
+router.delete('/cats/:id/comments/:comment_id', middleware.commentOwner, function (req, res) {
 	Cat.findById(req.params.id, function (err, cat) {
 		if (err) {
 			console.log(err);

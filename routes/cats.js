@@ -1,5 +1,6 @@
 var express = require('express'),
 		router  = express.Router(),
+		middleware = require('../middleware'),
 		Cat     = require('../models/cat');
 
 // index - route
@@ -14,16 +15,19 @@ router.get('/cats', function (req, res) {
 });
 
 // new - route
-router.get('/cats/new', function (req, res) {
+router.get('/cats/new', middleware.isLoggedIn, function (req, res) {
 	res.render('cat/new');
 });
 
 // create route
-router.post('/cats', function (req, res) {
+router.post('/cats', middleware.isLoggedIn, function (req, res) {
 	Cat.create(req.body.cat, function (err, cat) {
 		if (err) {
 			console.log(err);
 		} else {
+			cat.author.id = req.user._id;
+			cat.author.username = req.user.username;
+			cat.save();
 			res.redirect('/cats');
 		}
 	});
@@ -41,7 +45,7 @@ router.get('/cats/:id', function (req, res) {
 });
 
 // edit - route
-router.get('/cats/:id/edit', function (req, res) {
+router.get('/cats/:id/edit', middleware.catOwner, function (req, res) {
 	Cat.findById(req.params.id, function (err, cat) {
 		if (err) {
 			console.log(err);
@@ -52,7 +56,7 @@ router.get('/cats/:id/edit', function (req, res) {
 });
 
 // update - route
-router.put('/cats/:id', function (req, res) {
+router.put('/cats/:id', middleware.catOwner, function (req, res) {
 	Cat.findByIdAndUpdate(req.params.id, req.body.cat, function (err, cat) {
 		if (err) {
 			console.log(err);
@@ -63,7 +67,7 @@ router.put('/cats/:id', function (req, res) {
 });
 
 // destroy route
-router.delete('/cats/:id', function (req, res) {
+router.delete('/cats/:id', middleware.catOwner, function (req, res) {
 	Cat.findByIdAndRemove(req.params.id, function (err) {
 		if (err) {
 			console.log(err);

@@ -7,7 +7,7 @@
 			<div class="thumbnail">
 				<img src="<%= cat.image %>">
 				<div class="caption">
-					<span>Posted: <%= cat.createdAt.toDateString() %></span>
+					<span>Posted by <%= cat.author.username %>: <%= cat.createdAt.toDateString() %></span>
 					<p><%= cat.description %></p>
 					<a class="btn btn-default" role="button" href="/cats/<%= cat._id %>/edit">Edit</a>
 					<form action="/cats/<%= cat._id %>?_method=DELETE" method="POST">
