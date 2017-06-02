@@ -5,9 +5,13 @@ var express    = require('express'),
 		Cat        = require('../models/cat');
 
 // New route
-router.get('/cats/:id/comments/new', function (req, res) {
-	Cat.findById(req.params.id, middleware.is, function (err, cat) {
-		res.render('comment/new', {cat: cat});
+router.get('/cats/:id/comments/new', middleware.isLoggedIn, function (req, res) {
+	Cat.findById(req.params.id,function (err, cat) {
+		if (err) {
+			res.redirect('back');
+		} else {
+			res.render('comment/new', {cat: cat});
+		}
 	});
 });
 
@@ -15,11 +19,11 @@ router.get('/cats/:id/comments/new', function (req, res) {
 router.post('/cats/:id/comments', middleware.isLoggedIn, function (req, res) {
 	Cat.findById(req.params.id, function (err, cat) {
 		if (err) {
-			console.log(err);
+			res.redirect('back');
 		} else {
 			Comment.create(req.body.comment, function (err, comment) {
 				if (err) {
-					console.log(err);
+					res.redirect('back');
 				} else {
 					comment.author.id = req.user._id;
 					comment.author.username = req.user.username;
@@ -37,7 +41,7 @@ router.post('/cats/:id/comments', middleware.isLoggedIn, function (req, res) {
 router.get('/cats/:id/comments/:comment_id/edit', middleware.commentOwner, function (req, res) {
 	Cat.findById(req.params.id, function (err, cat) {
 		if (err) {
-			console.log(err);
+			res.redirect('back');
 		} else {
 			Comment.findById(req.params.comment_id, function (err, comment) {
 				if (err) {
@@ -58,8 +62,9 @@ router.put('/cats/:id/comments/:comment_id', middleware.commentOwner, function (
 		} else {
 			Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function (err, comment) {
 				if (err) {
-					console.log(err);
+					res.redirect('back');
 				} else {
+					req.flash('success', 'Comment has been successfully updated');
 					res.redirect('/cats/' + cat._id);
 				}
 			});
@@ -71,9 +76,10 @@ router.put('/cats/:id/comments/:comment_id', middleware.commentOwner, function (
 router.delete('/cats/:id/comments/:comment_id', middleware.commentOwner, function (req, res) {
 	Cat.findById(req.params.id, function (err, cat) {
 		if (err) {
-			console.log(err);
+			res.redirect('back');
 		} else {
 			Comment.findByIdAndRemove(req.params.comment_id, function (err) {
+				req.flash('success', 'Comment has been successfully deleted');
 				res.redirect('/cats/' + cat._id);
 			});
 		}

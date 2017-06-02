@@ -1,6 +1,7 @@
 body {
 	background: #FFFFFF;
 	padding-top: 50px;
+	margin-bottom:70px;
 	font-family: 'PT Sans', sans-serif;
 }
 
@@ -55,4 +56,29 @@ h1 {
 
 #show form {
 	display: inline;
+}
+
+footer {
+	background: #18bc9c;
+	color: #FFF;
+	text-align: center;
+	position:fixed;
+	bottom:0px;
+	left:0px;
+	right:0px;
+}
+
+footer p {
+	font-size: 1.3em;
+	padding: 2%;
+}
+
+footer a {
+	color: #FFF;
+	border-bottom: 1px dashed #FFF;
+}
+
+footer a:hover {
+	text-decoration: none;
+	color: #FFF;
 }

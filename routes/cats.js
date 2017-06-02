@@ -23,7 +23,7 @@ router.get('/cats/new', middleware.isLoggedIn, function (req, res) {
 router.post('/cats', middleware.isLoggedIn, function (req, res) {
 	Cat.create(req.body.cat, function (err, cat) {
 		if (err) {
-			console.log(err);
+			res.redirect('back');
 		} else {
 			cat.author.id = req.user._id;
 			cat.author.username = req.user.username;
@@ -37,7 +37,7 @@ router.post('/cats', middleware.isLoggedIn, function (req, res) {
 router.get('/cats/:id', function (req, res) {
 	Cat.findById(req.params.id).populate('comments').exec(function (err, cat) {
 		if (err) {
-			console.log(err);
+			res.redirect('back');
 		} else {
 			res.render('cat/show', {cat: cat});
 		}
@@ -48,7 +48,7 @@ router.get('/cats/:id', function (req, res) {
 router.get('/cats/:id/edit', middleware.catOwner, function (req, res) {
 	Cat.findById(req.params.id, function (err, cat) {
 		if (err) {
-			console.log(err);
+			res.redirect('back');
 		} else {
 			res.render('cat/edit', {cat: cat});
 		}
@@ -59,8 +59,9 @@ router.get('/cats/:id/edit', middleware.catOwner, function (req, res) {
 router.put('/cats/:id', middleware.catOwner, function (req, res) {
 	Cat.findByIdAndUpdate(req.params.id, req.body.cat, function (err, cat) {
 		if (err) {
-			console.log(err);
+			res.redirect('back');
 		} else {
+			req.flash('success', 'Cat has been successfully updated');
 			res.redirect('/cats/' + req.params.id);
 		}
 	});
@@ -70,8 +71,9 @@ router.put('/cats/:id', middleware.catOwner, function (req, res) {
 router.delete('/cats/:id', middleware.catOwner, function (req, res) {
 	Cat.findByIdAndRemove(req.params.id, function (err) {
 		if (err) {
-			console.log(err);
+			res.redirect('back');
 		} else {
+			req.flash('success', 'Cat has been successfully deleted');
 			res.redirect('/cats');
 		}
 	});

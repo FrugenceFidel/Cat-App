@@ -7,19 +7,21 @@
 			<div class="thumbnail">
 				<img src="<%= cat.image %>">
 				<div class="caption">
-					<span>Posted by <%= cat.author.username %>: <%= cat.createdAt.toDateString() %></span>
+					<span>
+						<em>Posted by <%= cat.author.username %>: <%= cat.createdAt.toDateString() %></em>
+					</span>
 					<p><%= cat.description %></p>
-					<a class="btn btn-default" role="button" href="/cats/<%= cat._id %>/edit">Edit</a>
+					<a class="btn btn-info btn-xs" role="button" href="/cats/<%= cat._id %>/edit">Edit</a>
 					<form action="/cats/<%= cat._id %>?_method=DELETE" method="POST">
-						<button class="btn btn-default">Delete</button>
+						<button class="btn btn-danger btn-xs">Delete</button>
 					</form>
 					<div>
-						<a href="/cats/<%= cat._id %>/comments/new" class="btn btn-default">Add comment</a>
+						<a href="/cats/<%= cat._id %>/comments/new" class="btn btn-primary btn-xs">Add comment</a>
 						<% cat.comments.forEach(function (comment) { %>
 							<p><%= comment.author.username %> - <%= comment.content %></p>
-							<a href="/cats/<%= cat._id %>/comments/<%= comment._id %>/edit" class="btn btn-default">Edit</a>
+							<a href="/cats/<%= cat._id %>/comments/<%= comment._id %>/edit" class="btn btn-info btn-xs">Edit</a>
 							<form action="/cats/<%= cat._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-								<button class="btn btn-default">Delete</button>
+								<button class="btn btn-danger btn-xs">Delete</button>
 							</form>
 						<%	}); %>
 					</div>
