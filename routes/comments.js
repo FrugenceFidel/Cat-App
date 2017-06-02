@@ -1,6 +1,6 @@
 var express = require('express'),
 		router  = express.Router(),
-		Comment     = require('../models/comment');
+		Comment     = require('../models/comment'),
 		Cat     = require('../models/cat');
 
 // New route
@@ -20,6 +20,9 @@ router.post('/cats/:id/comments', function (req, res) {
 				if (err) {
 					console.log(err);
 				} else {
+					comment.author.id = req.user._id;
+					comment.author.username = req.user.username;
+					comment.save();
 					cat.comments.push(comment);
 					cat.save();
 					res.redirect('/cats/' + req.params.id);
