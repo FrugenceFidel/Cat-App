@@ -3,16 +3,17 @@
 <div class="container">
 	<div class="row">
 		<div class="col-sm-8 col-sm-offset-2">
-			<h2 class="text-center">Comment to <%= cat.name %></h2>
-
-			<form class="form-horizontal" action="/cats/<%= cat._id%>/comments" method="POST">
-				<div class="form-group">
-					<div class="col-sm-12">
-						<textarea class="form-control" name="comment[content]" rows="4" placeholder="Content"></textarea>
+			<div id="inputForm">
+				<h2 class="text-center">Comment to <%= cat.name %></h2>
+				<form class="form-horizontal" action="/cats/<%= cat._id%>/comments" method="POST">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<textarea class="form-control" name="comment[content]" rows="4" placeholder="Content"></textarea>
+						</div>
 					</div>
-				</div>
-				<button class="btn btn-default btn-lg">Comment</button>
-			</form>
+					<button class="btn btn-default btn-lg">Comment</button>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>

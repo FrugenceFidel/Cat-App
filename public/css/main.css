@@ -1,7 +1,6 @@
 body {
 	background: #FFFFFF;
 	padding-top: 50px;
-	margin-bottom:70px;
 	font-family: 'PT Sans', sans-serif;
 }
 
@@ -58,19 +57,20 @@ h1 {
 	display: inline;
 }
 
+#inputForm {
+	margin: 24% auto;
+	max-width: 70%;
+}
+
 footer {
 	background: #18bc9c;
 	color: #FFF;
-	text-align: center;
-	position:fixed;
-	bottom:0px;
-	left:0px;
-	right:0px;
+	text-align: center
 }
 
 footer p {
 	font-size: 1.3em;
-	padding: 2%;
+	padding: 1%;
 }
 
 footer a {
